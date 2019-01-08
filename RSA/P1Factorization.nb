@@ -1,0 +1,14 @@
+p1factor[n_, j_] :=
+ (
+  a = 2;
+  b = ConstantArray[0, j];
+  b[[1]] = PowerMod[a, 1, n];
+  Do[b[[k]] = PowerMod[b[[k - 1]], k, n];,
+   {k, 2, j}];
+  d = GCD[b[[j]] - 1, n];
+  If[d != 1 && d != n, p = d;
+   q = n/d;
+   Print[p];
+   Print[q];
+   ];
+  )
