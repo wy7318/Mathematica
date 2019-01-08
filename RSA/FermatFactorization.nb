@@ -1,0 +1,10 @@
+Fermat[n_] :=
+ (
+  For[x = 1, x < 100, x++, y = n + x^2;
+   If[
+    TrueQ[IntegerQ[Sqrt[y]]],
+    Print[Sqrt[y] + x];
+    Print[Sqrt[y] - x];
+    ];
+   ]
+  )
