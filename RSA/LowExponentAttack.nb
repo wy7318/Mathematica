@@ -1,0 +1,38 @@
+lowexponentattack[n_, e_] :=
+ (
+  p1 = 0;
+  q1 = 0;
+  
+  a = ContinuedFraction[e/n];
+  
+  p = ConstantArray[0, Length[a]]; p[[1]] = a[[1]]; 
+  p[[2]] = a[[1]]*a[[2]] + 1;
+  q = ConstantArray[0, Length[a]];
+  q[[1]] = 1;
+  q[[2]] = a[[2]];
+  
+  Do[
+   p[[k]] = a[[k]] p[[k - 1]] + p[[k - 2]]; 
+   q[[k]] = a[[k]] q[[k - 1]] + q[[k - 2]];
+   , {k, 3, Length[a]}];
+  stop = 0;
+  Do[(
+    If[stop == 0, (
+       A = (e*q[[k]] - 1)/p[[k]];
+       If[IntegerQ[A], (
+         root1 = ((n - A + 1) + Sqrt[(n - A + 1)^2 - 4*n])/2; 
+         root2 = ((n - A + 1) - Sqrt[(n - A + 1)^2 - 4*n])/2;
+         If[(IntegerQ[root1] && IntegerQ[root2]), (
+           p1 = root1; q1 = root2; 
+           d = PowerMod[e, -1, (p1 - 1)*(q1 - 1)]; stop = 1;)
+          , (Null)];)
+        , (Null)];)
+      , (Null)];)
+   , {k, 2, Length[a]}];
+  If[(p1 == 0 && q1 == 0),
+   Print["Attack failed. "];
+   ,
+   (Print["p = ", p1];
+    Print["q = ", q1];
+    Print["d = ", d];)];
+  )
