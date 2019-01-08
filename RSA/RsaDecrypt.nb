@@ -1,0 +1,15 @@
+RsaDecrypt[cipher_, e_, n_] :=
+ (
+  p = ((n - EulerPhi[n] + 
+        1) - (Sqrt[(n - EulerPhi[n] + 1)^2 - (4*n)]))/2;
+  q = ((n - EulerPhi[n] + 
+        1) + (Sqrt[(n - EulerPhi[n] + 1)^2 - (4*n)]))/2;
+  d = PowerMod[e, -1, (p - 1)*(q - 1)];
+  plainNumber = PowerMod[cipher, d, n];
+  plainText = Module[{x, msg, i}, x = IntegerDigits[plainNumber];
+    x = If[Mod[Length[x], 2] == 0, x, Prepend[x, 0]];
+    x = Transpose[Partition[x, 2]];
+    x = 10 x[[1]] + x[[2]] + ToCharacterCode["A"][[1]] - 1;
+    Apply[StringJoin, FromCharacterCode[x]]];
+  Print[plainText];
+  )
