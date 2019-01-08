@@ -1,0 +1,9 @@
+MillerRabin[t_, k_] := 
+ Module[{d = t - 1, s = 0, test = "Probably prime"}, 
+  While[Mod[d, 2] == 0, d /= 2; s++] Do[a = RandomInteger[{2, t - 1}];
+     x = PowerMod[a, d, t];
+    If[x != 1, 
+     For[r = 0, r < s, r++, If[x == t - 1, Continue[]]; 
+      x = Mod[x*x, t];];
+     If[x != t - 1, test = "Composite number"];];, {k}];
+  Print[test]]
