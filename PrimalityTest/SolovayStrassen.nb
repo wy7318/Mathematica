@@ -1,0 +1,13 @@
+solovaystrassen[n, t] := (numbers = Range[t]; 
+                    a = RandomSample[numbers]; stop = 0; k = 1; 
+                    While[k <= t, 
+                    If[(sto == 0), (x1 = JacobiSymbol[a[[k]], n]; 
+                    x2 = PowerMod[a[[k]], (n \[Minus] 1)/2, n]; 
+                    r1 = Mod[x1, n]; r2 = Mod[x2, n]; 
+                    If[(r1 != r2), (stop = 1; Print[""]; 
+                    Print[" n is composite."]; Print[""];), (Null)]; 
+                    k = k + 1;), (k = t + 1)];]; 
+                   If[stop == 0, (Print[""]; 
+                Print[" n is probably prime"]; 
+            Print[" probability at least", 1 - 2 ˆ (-t)]; Print[""];),
+    Null];)
